@@ -1,0 +1,30 @@
+<html >
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'naps/style.css' %}">
+
+  <div label="headerBlock" style="margin-top:20px; margin-bottom: 20px; margin-left:300px; margin-right:300px;">
+    <div id="logo" style="display:inline-block; align: center; vertical-align: middle;">
+      <img src="{% static "naps/hoonaps-icon-full-transparent.png" %}" alt="hoonaps logo" width="300">
+    </div>
+    <div style="display:inline-block;vertical-align: middle; padding-left: 20px;">
+      <h1> welcome to hoonaps! </h1>
+    </div>
+  </div>
+  <hr>
+  <div style="margin-left:300px;  margin-right: 300px;">
+    {% if building_list %}
+      <ul style="list-style-type:none; padding-left: 0;">
+        {% for building in building_list %}
+          <li><b>{{building}}</b></li>
+            <ul>
+              {% for spot in building.spot_set.all %}
+                  <li><a href="{% url 'naps:detail' spot.id %}">{{ spot }}</a></li>
+              {% endfor %}
+            </ul>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No nap spots are available.</p>
+    {% endif %}
+  </div>
+</html>
