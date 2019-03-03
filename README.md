@@ -6,7 +6,11 @@ This assumes you have python3 and pip installed, and that you are in directory h
 Run the following:
 
 pip install -r requirements.txt
+
 cd hoonaps
+
 python manage.py makemigrations
+
 python manage.py migrate
+
 python manage.py runserver
