@@ -3,30 +3,49 @@
   <link rel="stylesheet" type="text/css" href="{% static 'naps/style.css' %}">
 
   <div class="headerBlock">
-    <div id="logo">
+    <div id="leftColumn">
       <a href="{% url 'naps:index' %}"><img src="{% static "naps/hoonaps-icon-full-transparent.png" %}" alt="hoonaps logo" width="200"></a>
     </div>
-    <div id="catchphrase">
+    <div id="rightColumn">
       <h1> your guide to nap spots around UVA </h1>
     </div>
   </div>
+
   <hr>
-  <div style="margin-left:300px;  margin-right: 300px;">
-    {% if building_list %}
-      <ul class="infoList">
-        {% for building in building_list %}
-          {% if building.spot_set.all %}
-            <li><b>{{building}}</b></li>
-            <ul>
-              {% for spot in building.spot_set.all %}
-                  <li><a href="{% url 'naps:detail' spot.id %}">{{ spot }}</a></li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No nap spots are available.</p>
-    {% endif %}
+  <div class="texty" style="margin-left:300px; margin-right: 300px;">
+    <a href="{% url 'naps:index' %}">Map </a>
+    <a style="padding-left:20px;" href="{% url 'naps:list' %}">All Spots </a>
+    <a style="padding-left:20px;" href="{% url 'naps:addSpot' %}">Add a Spot</a>
   </div>
+  <hr>
+
+
+
+  <div id="map"></div>
+
+<script>
+    var map;
+    function initMap() {
+        var myLatlng = new google.maps.LatLng(38.0336,-78.5080);
+        var myOptions = {
+            zoom: 16,
+            minZoom:15,
+            center: myLatlng,
+            draggable:true,
+            gestureHandling: 'greedy',
+            mapTypeId: google.maps.MapTypeId.TRAFFIC
+        }
+        map = new google.maps.Map(document.getElementById('map'), myOptions);
+        {% for location in location_list %}
+            new google.maps.Marker({
+                draggable: false,
+                position: new google.maps.LatLng({{ location.longtitude }}, {{ location.latitude }}),
+                map: map,
+            });
+        {% endfor %}
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe_RnLaAqwa7vzsS9L3khdfa3CdWKfkbs&callback=initMap"
+        async defer></script>
 </html>
