@@ -7,15 +7,18 @@ class Building(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
         return self.name
-
-
+class Noise(models.Model):
+    level = models.CharField(max_length=7)
+    def __str__(self):
+        return self.level
 
 class Spot(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    noise = models.ForeignKey(Noise, on_delete=models.CASCADE)
+
     floor = models.CharField(max_length=10)
     type = models.CharField(max_length=100)
     size = models.IntegerField(default=1)
-    noise = models.CharField(max_length=7, default='Average')
     pub_date = models.DateTimeField('Date added')
     notes = models.CharField(max_length=500, default='No notes')
     def __str__ (self):
