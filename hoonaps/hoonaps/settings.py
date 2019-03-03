@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     # django-material
     'material',
     # user defined apps
-    'polls.apps.PollsConfig',
     'forms.apps.FormsConfig'
 ]
 
