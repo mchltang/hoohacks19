@@ -32,11 +32,13 @@
             mapTypeId: google.maps.MapTypeId.TRAFFIC
         }
         map = new google.maps.Map(document.getElementById('map'), myOptions);
-        new google.maps.Marker({
-            draggable: false,
-            position: myLatlng,
-            map: map,
-        });
+        {% for location in location_list %}
+            new google.maps.Marker({
+                draggable: false,
+                position: new google.maps.LatLng({{ location.longtitude }}, {{ location.latitude }}),
+                map: map,
+            });
+        {% endfor %}
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe_RnLaAqwa7vzsS9L3khdfa3CdWKfkbs&callback=initMap"
