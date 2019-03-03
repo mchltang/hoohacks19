@@ -6,7 +6,7 @@ from .models import Spot, Building
 
 def index(request):
     #this is the landing page
-    spot_list = Spot.objects.order_by('id')
+    spot_list = Spot.objects.all()
     context = {'spot_list': spot_list}
     return render(request, 'naps/index.html', context)
 
