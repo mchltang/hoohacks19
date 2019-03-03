@@ -1,4 +1,5 @@
 from django.db import models
+from material import *
 
 class Location(models.Model):
     location_name = models.CharField(max_length=200)
