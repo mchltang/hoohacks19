@@ -13,13 +13,16 @@
     </div>
 </div>
 <hr>
-<div class="texty" style="margin-left:300px; margin-right: 300px;">
+
+<div id="menu" class="texty" style="margin-left:300px; margin-right: 300px;">
     <a href="{% url 'naps:index' %}">Map </a>
     <a style="padding-left:20px;" href="{% url 'naps:list' %}">All Spots </a>
     <a style="padding-left:20px;" href="{% url 'naps:add_spot' %}">Add a Spot</a>
 </div>
 <hr>
-<div id="column" style="margin-top:20px; margin-bottom: 20px; margin-left:300px; margin-right:300px;">
+
+<body>
+<div class="texty" style="max-width: 300px; padding-right: 100px; vertical-align: top; display:inline-block; margin-bottom: 20px; margin-left:300px;">
     {% block content %}
         <h2>Add a new location</h2>
         <div>
@@ -27,35 +30,15 @@
                 {{ form.as_p }}
                 <button type="submit" class="save btn btn-default">Save</button>
             </form>
+            Drag and drop the pin to automatically set latitude and longitude.
         </div>
 
     {% endblock %}
 </div>
-</html>
 
+<div style="vertical-align: top; display:inline-block; width: 900px;" id="map"></div>
+    </body>
 
-<html>
-<head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-            height: 60%;
-        }
-
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-</head>
-<body>
-<div id="map"></div>
 <script>
     var map;
 
@@ -80,5 +63,6 @@
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsDBAkDBWvVM8DOoMrJiq5-8SVVMbT-yc&callback=initMap"
         async defer></script>
-</body>
+    </div>
+
 </html>
