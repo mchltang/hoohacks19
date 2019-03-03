@@ -1,6 +1,7 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Spot, Building
+from .naps import SpotForm
 
 
 
@@ -21,6 +22,13 @@ def detail(request, spot_id):
     spot = get_object_or_404(Spot, pk=spot_id)
     return render(request, 'naps/detail.html', {'spot': spot})
 
-def addSpot(request):
-    #this is where users can submit a spots
-    return render(request, 'naps/addSpot.html')
+def add_spot(request):
+    if request.method == "POST":
+        form = SpotForm(request.POST)
+        if form.is_valid():
+            spot = form.save(commit=False)
+            spot.save()
+            return redirect('/napSpots/')
+    else:
+        form = SpotForm()
+    return render(request, 'naps/add_spot.html', {'form': form})

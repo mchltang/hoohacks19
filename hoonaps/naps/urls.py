@@ -5,8 +5,8 @@ app_name = 'naps'
 urlpatterns = [
     # ex: /napSpots/
     path('', views.index, name='index'),
-    
-    path('addSpot/', views.addSpot, name='addSpot'),
+
+    path('add_spot/', views.add_spot, name='add_spot'),
 
     path('list/', views.list, name='list'),
     # ex: /napSpots/5/

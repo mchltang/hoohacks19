@@ -15,10 +15,19 @@
   <div class="texty" style="margin-left:300px; margin-right: 300px;">
     <a href="{% url 'naps:index' %}">Map </a>
     <a style="padding-left:20px;" href="{% url 'naps:list' %}">All Spots </a>
-    <a style="padding-left:20px;" href="{% url 'naps:addSpot' %}">Add a Spot</a>
+    <a style="padding-left:20px;" href="{% url 'naps:add_spot' %}">Add a Spot</a>
   </div>
   <hr>
   <div style="margin-top:20px; margin-bottom: 20px; margin-left:300px; margin-right:300px;">
-    hi
+  {% block content %}
+  <h2>Add a new location</h2>
+  <form method="POST" class="post-form">{% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="save btn btn-default">Save</button>
+  </form>
+  {% endblock %}
   </div>
+
+
+
 </html>
