@@ -23,6 +23,7 @@
 
 <script>
     var map;
+
     function initMap() {
         var myLatlng = new google.maps.LatLng(38.0336,-78.5080);
         var myOptions = {
@@ -34,11 +35,28 @@
             mapTypeId: google.maps.MapTypeId.TRAFFIC
         }
         map = new google.maps.Map(document.getElementById('map'), myOptions);
+        setMarkers();
+    }
+
+    function setMarkers() {
+        var marker = null;
+        var infowindow = new google.maps.InfoWindow();
+
         {% for location in location_list %}
-            new google.maps.Marker({
+            var contentString =
+                '<h1 id="firstHeading" class="firstHeading">{{ location.location_name }}</h1>'+
+                '<div id="bodyContent">{{ location.location_description }}</div>';
+            var marker = new google.maps.Marker({
                 draggable: false,
                 position: new google.maps.LatLng({{ location.longtitude }}, {{ location.latitude }}),
                 map: map,
+                title: '{{ location.location_name }}',
+                info: contentString,
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent(this.info);
+                infowindow.open(map, this);
             });
         {% endfor %}
     }
