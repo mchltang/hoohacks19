@@ -1,0 +1,84 @@
+<html>
+<title>Add a Spot</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'naps/style.css' %}">
+
+<div class="headerBlock">
+    <div id="leftColumn">
+        <a href="{% url 'naps:index' %}"><img src="{% static "naps/hoonaps-icon-full-transparent.png" %}"
+                                              alt="hoonaps logo" width="200"></a>
+    </div>
+    <div id="rightColumn">
+        <h1> thanks for contributing!</h1>
+    </div>
+</div>
+<hr>
+<div class="texty" style="margin-left:300px; margin-right: 300px;">
+    <a href="{% url 'naps:index' %}">Map </a>
+    <a style="padding-left:20px;" href="{% url 'naps:list' %}">All Spots </a>
+    <a style="padding-left:20px;" href="{% url 'naps:add_spot' %}">Add a Spot</a>
+</div>
+<hr>
+<div id="column" style="margin-top:20px; margin-bottom: 20px; margin-left:300px; margin-right:300px;">
+    {% block content %}
+        <h2>Add a new location</h2>
+        <div>
+            <form method="POST" class="post-form">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Save</button>
+            </form>
+        </div>
+
+    {% endblock %}
+</div>
+</html>
+
+
+<html>
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 60%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    var map;
+
+    function initMap() {
+        var myLatLng = {lat: 38.034288, lng: -78.508160};
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatLng,
+            zoom: 17,
+            minZoom: 16,
+        });
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            draggable: true,
+            map: map,
+            title: 'selector'
+        });
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+            document.getElementById("id_latitude").value = this.getPosition().lat();
+            document.getElementById("id_longtitude").value = this.getPosition().lng();
+        })
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsDBAkDBWvVM8DOoMrJiq5-8SVVMbT-yc&callback=initMap"
+        async defer></script>
+</body>
+</html>

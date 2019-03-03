@@ -1,0 +1,74 @@
+<html >
+<title>Map</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'naps/style.css' %}">
+
+  <div class="headerBlock">
+    <div id="leftColumn">
+      <a href="{% url 'naps:index' %}"><img src="{% static "naps/hoonaps-icon-full-transparent.png" %}" alt="hoonaps logo" width="200"></a>
+    </div>
+    <div id="rightColumn">
+      <h1> your guide to nap spots around UVA </h1>
+    </div>
+  </div>
+
+  <hr>
+  <div class="texty" style="margin-left:300px; margin-right: 300px;">
+    <a href="{% url 'naps:index' %}">Map </a>
+    <a style="padding-left:20px;" href="{% url 'naps:list' %}">All Spots </a>
+    <a style="padding-left:20px;" href="{% url 'naps:add_spot' %}">Add a Spot</a>
+  </div>
+  <hr>
+
+
+
+  <div id="map"></div>
+
+  <script>
+      var map;
+
+      function initMap() {
+          var myLatlng = new google.maps.LatLng(38.0336,-78.5080);
+          var myOptions = {
+              zoom: 16,
+              minZoom:15,
+              center: myLatlng,
+              draggable:true,
+              gestureHandling: 'greedy',
+              mapTypeId: google.maps.MapTypeId.TRAFFIC
+          }
+          map = new google.maps.Map(document.getElementById('map'), myOptions);
+          setMarkers();
+      }
+
+      function setMarkers() {
+          var marker = null;
+          var infowindow = new google.maps.InfoWindow();
+
+          {% for spot in spot_list %}
+          var contentString =
+            '<h1 id="firstHeading" class="firstHeading">{{ spot }}</h1>'+
+            '<div><b>Size: </b>{{spot.size}} spot{{spot.size|pluralize}}</div>'+
+            '<div><b>Type: </b>{{spot.type}}</div>'+
+            '<div><b>Noise level: </b>{{spot.noise}}</div>'+
+            '<div><b>Notes: </b>{{spot.notes}}</div>'
+            ;
+              var marker = new google.maps.Marker({
+                  draggable: false,
+                  position: new google.maps.LatLng({{ spot.latitude }}, {{ spot.longtitude }}),
+                  map: map,
+                  title: '{{ spot }}',
+                  info: contentString,
+              });
+
+              google.maps.event.addListener(marker, 'click', function () {
+                  infowindow.setContent(this.info);
+                  infowindow.open(map, this);
+              });
+          {% endfor %}
+      }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAe_RnLaAqwa7vzsS9L3khdfa3CdWKfkbs&callback=initMap"
+          async defer></script>
+</html>
