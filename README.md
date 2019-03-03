@@ -5,7 +5,7 @@ This is the main repo for our HooHacks 2019 project. Written with Django.
 This assumes you have python3 and pip installed, and that you are in directory hoohacks19.
 Run the following:
 
-pip install requirements.txt
+pip install -r requirements.txt
 cd hoonaps
 python manage.py makemigrations
 python manage.py migrate
