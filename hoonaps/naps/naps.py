@@ -4,7 +4,7 @@ from .models import Spot
 class SpotForm(forms.ModelForm):
     class Meta:
         model = Spot
-        fields = {
+        fields = [
             'building',
             'noise',
             'floor',
@@ -13,4 +13,4 @@ class SpotForm(forms.ModelForm):
             'notes',
             'latitude',
             'longtitude',
-        }
+        ]

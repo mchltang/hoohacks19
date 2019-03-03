@@ -28,7 +28,7 @@ def add_spot(request):
         if form.is_valid():
             spot = form.save(commit=False)
             spot.save()
-            return redirect('/napSpots/')
+            return redirect('/nap_spots/')
     else:
         form = SpotForm()
     return render(request, 'naps/add_spot.html', {'form': form})
