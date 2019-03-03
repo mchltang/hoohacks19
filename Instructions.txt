@@ -1,0 +1,8 @@
+this assumes you have python3 and pip installed, and that you are in directory hoohacks19.
+run the following:
+
+pip install requirements.txt
+cd hoonaps
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
