@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # django-material
+    'material',
     # user defined apps
     'polls.apps.PollsConfig',
+    'forms.apps.FormsConfig'
 ]
 
 MIDDLEWARE = [
