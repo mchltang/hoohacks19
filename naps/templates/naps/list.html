@@ -1,0 +1,38 @@
+<html>
+<title>All Spots</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'naps/style.css' %}">
+<div class="headerBlock">
+  <div id="leftColumn">
+    <a href="{% url 'naps:index' %}"><img src="{% static "naps/hoonaps-icon-full-transparent.png" %}" alt="hoonaps logo" width="200"></a>
+  </div>
+  <div id="rightColumn">
+    <h1> your guide to nap spots around UVA </h1>
+  </div>
+</div>
+<hr>
+<div class="texty" style="margin-left:300px; margin-right: 300px;">
+  <a href="{% url 'naps:index' %}">Map </a>
+  <a style="padding-left:20px;" href="{% url 'naps:list' %}">All Spots </a>
+  <a style="padding-left:20px;" href="{% url 'naps:add_spot' %}">Add a Spot</a>
+</div>
+<hr>
+  <div style="margin-left:300px; margin-right: 300px;">
+    {% if building_list %}
+      <ul class="infoList">
+        {% for building in building_list %}
+          {% if building.spot_set.all %}
+            <li><b>{{building}}</b></li>
+            <ul>
+              {% for spot in building.spot_set.all %}
+                  <li><a href="{% url 'naps:detail' spot.id %}">{{ spot }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No nap spots are available.</p>
+    {% endif %}
+  </div>
+</html>
